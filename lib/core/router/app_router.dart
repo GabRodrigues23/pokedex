@@ -8,7 +8,7 @@ import 'package:pokedex/core/constants/app_routes.dart';
 
 class AppRouter {
   final router = GoRouter(
-    initialLocation: AppRoutes.splash,
+    initialLocation: AppRoutes.home,
     routes: [
       GoRoute(
         path: AppRoutes.splash,

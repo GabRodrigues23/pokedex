@@ -4,9 +4,9 @@ abstract class Error {
 }
 
 class NetworkError extends Error {
-  const NetworkError(String message) : super(message);
+  const NetworkError(super.message);
 }
 
 class ServerFailure extends Error {
-  const ServerFailure(String message) : super(message);
+  const ServerFailure(super.message);
 }

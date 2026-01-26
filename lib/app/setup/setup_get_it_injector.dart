@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:dio/dio.dart';
 import 'package:pokedex/core/http/dio_client.dart';
 import 'package:pokedex/app/setup/pokemon_list_query_defaults.dart';
 import 'package:pokedex/app/features/pokemon/domain/repositories/pokemon_repository.dart';
@@ -14,7 +13,7 @@ void setupGetItInjector() {
   getIt.registerLazySingleton<DioClient>(() => DioClient());
 
   getIt.registerLazySingleton<PokemonApiService>(
-    () => PokemonApiService(getIt<Dio>()),
+    () => PokemonApiService(getIt<DioClient>().dio),
   );
 
   getIt.registerLazySingleton(
