@@ -10,15 +10,18 @@ final getIt = GetIt.instance;
 void setupGetItInjector() {
   getIt.registerLazySingleton<DioClient>(() => DioClient());
 
-  getIt.registerLazySingleton<PokemonApiService>(
-    () => PokemonApiService(getIt<DioClient>().dio),
-  );
-
   getIt.registerLazySingleton(
     () => const PokemonListQueryDefaults(limit: 151, offset: 0),
   );
 
+  getIt.registerLazySingleton<PokemonApiService>(
+    () => PokemonApiService(getIt<DioClient>().dio),
+  );
+
   getIt.registerLazySingleton<PokemonRepositoryInterface>(
-    () => PokemonRepository(getIt<PokemonListQueryDefaults>()),
+    () => PokemonRepository(
+      getIt<PokemonApiService>(),
+      getIt<PokemonListQueryDefaults>(),
+    ),
   );
 }
