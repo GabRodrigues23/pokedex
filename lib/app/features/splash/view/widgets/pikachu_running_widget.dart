@@ -15,10 +15,13 @@ class _PikachuRunningWidgetState extends State<PikachuRunningWidget> {
   Future<SpriteAnimation>? _animationFuture;
 
   final List<String> _phrases = [
-    'Caçando Pokemons...',
+    'Travando nos Arbustos...',
     'Registrando na Pokédex...',
+    'Aqui não tem Team Rocket...ainda',
     'Lutando com o Mewtwo...',
     'O Ash perdeu o torneio...denovo',
+    'Aguarde, um ditto passou pelo backend...',
+    'Magikarp não aprende Hydro Pump...',
     'Temos que pegar!',
   ];
 

@@ -18,4 +18,9 @@ class PokemonApiService {
     final results = (res.data['results'] as List);
     return results.map((e) => PokemonDto.fromJson(e)).toList();
   }
+
+  Future<Map<String, dynamic>> fetchPokemonDetails(int id) async {
+    final res = await dio.get(ApiEndpoints.pokemonDetails(id));
+    return (res.data as Map<String, dynamic>);
+  }
 }

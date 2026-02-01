@@ -1,8 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokedex/app/features/pokemon/viewmodels/pokemon_list_view_model.dart';
 import 'package:pokedex/app/features/splash/view/widgets/pikachu_running_widget.dart';
+import 'package:pokedex/app/setup/setup_get_it_injector.dart';
+import 'package:pokedex/core/constants/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,28 +14,49 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Timer? _navTimer;
+  int done = 0;
+  int total = 151;
 
   @override
   void initState() {
     super.initState();
-    _navTimer = Timer(const Duration(seconds: 10), () {
-      if (!mounted) return;
-      context.go('/home');
-    });
+    _start();
   }
 
-  @override
-  void dispose() {
-    _navTimer?.cancel();
-    super.dispose();
+  Future<void> _start() async {
+    final vm = getIt<PokemonListViewModel>();
+
+    await vm.preloadAll(
+      onProgress: (d, t) {
+        setState(() {
+          done = d;
+          total = t;
+        });
+      },
+    );
+
+    if (!mounted) return;
+    context.go(AppRoutes.home);
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final progress = total == 0 ? 0.0 : done / total;
+
+    return Scaffold(
       backgroundColor: Color(0xFFF9FFA7),
-      body: Center(child: PikachuRunningWidget()),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PikachuRunningWidget(),
+            const SizedBox(height: 16),
+            Text('Caçando Pokemon: $done/$total'),
+            const SizedBox(height: 8),
+            Text('Progresso: ${(progress * 100).toStringAsFixed(0)}%'),
+          ],
+        ),
+      ),
     );
   }
 }

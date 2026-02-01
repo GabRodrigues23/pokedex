@@ -4,13 +4,13 @@ class Pokemon {
   final int id;
   final String name;
   final String imageUrl;
-  PokemonType? type;
+  final PokemonType type;
 
   Pokemon({
     required this.id,
     required this.name,
     required this.imageUrl,
-    this.type,
+    this.type = PokemonType.unknown,
   });
 
   Pokemon copyWith({
@@ -23,7 +23,7 @@ class Pokemon {
       id: id ?? this.id,
       name: this.name,
       imageUrl: this.imageUrl,
-      type: type,
+      type: type ?? this.type,
     );
   }
 }
