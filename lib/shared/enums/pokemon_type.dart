@@ -13,13 +13,13 @@ enum PokemonType {
   flying(Colors.lightBlue),
   psychic(Colors.purpleAccent),
   bug(Colors.lightGreen),
-  rock(Colors.grey),
+  rock(Color.fromARGB(255, 107, 107, 107)),
   ghost(Colors.indigo),
   dragon(Colors.indigoAccent),
   dark(Colors.black87),
   steel(Colors.blueGrey),
   fairy(Colors.pinkAccent),
-  unknown(Color(0xFF949494));
+  unknown(Colors.white);
 
   final Color color;
   const PokemonType(this.color);
