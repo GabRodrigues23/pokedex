@@ -34,6 +34,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/pikachu_running_sprite.png
+    - assets/images/pikachu_pokemons_not_found.png
     - assets/images/pokedex_icon.png
 
   fonts:

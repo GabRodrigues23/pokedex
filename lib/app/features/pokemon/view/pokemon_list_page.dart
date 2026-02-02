@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_grid_panel_widget.dart';
 import 'package:pokedex/app/features/pokemon/viewmodels/pokemon_list_view_model.dart';
-import 'package:pokedex/app/features/pokemon/view/widgets/search_bar_widget.dart';
+import 'package:pokedex/app/features/pokemon/view/widgets/filter_bar_widget.dart';
 
 class PokemonListPage extends StatefulWidget {
   final PokemonListViewModel viewModel;
@@ -52,7 +52,15 @@ class _PokemonListPageState extends State<PokemonListPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             spacing: 12,
             children: [
-              SearchBarWidget(),
+              SearchBarWidget(
+                currentTypeFilter: widget.viewModel.typeFilter,
+                onTypeFilterChanged: (newTypeFilter) {
+                  widget.viewModel.setTypeFilter(newTypeFilter);
+                },
+                onSearchQueryChanged: (query) {
+                  widget.viewModel.setSearchQuery(query);
+                },
+              ),
               Expanded(
                 child: PokemonGridPanelWidget(viewModel: widget.viewModel),
               ),
