@@ -27,8 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
     final vm = getIt<PokemonListViewModel>();
 
     await vm.preloadAll(
-      onProgress: (done, total) {
-        setState(() {});
+      onProgress: (d, t) {
+        setState(() {
+          done = d;
+          total = t;
+        });
       },
     );
 
