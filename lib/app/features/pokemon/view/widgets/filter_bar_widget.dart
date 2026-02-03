@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/shared/enums/pokemon_type.dart';
+import 'package:pokedex/shared/extensions/formatter_string_extension.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final PokemonType? currentTypeFilter;
@@ -90,7 +91,7 @@ class _SearchBarState extends State<SearchBarWidget> {
     final isSelected = widget.currentTypeFilter == type;
 
     return FilterChip(
-      label: Text(label),
+      label: Text(label.captalize()),
       labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       backgroundColor: color,
       shape: RoundedRectangleBorder(
