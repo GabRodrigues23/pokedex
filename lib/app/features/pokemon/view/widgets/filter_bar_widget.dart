@@ -74,9 +74,28 @@ class _SearchBarState extends State<SearchBarWidget> {
                 ...PokemonType.values
                     .where((type) => type != PokemonType.unknown)
                     .map((type) {
+                      final isSelected = widget.currentTypeFilter == type;
                       return Padding(
                         padding: const EdgeInsets.only(right: 4),
-                        child: _buildChip(type, type.name, type.color),
+                        child: FilterChip(
+                          label: Text(type.name.captalize()),
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          backgroundColor: type.color,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(12),
+                            side: BorderSide(color: type.color),
+                          ),
+                          selected: isSelected,
+                          selectedColor: type.color.withAlpha(150),
+                          onSelected: (_) => widget.onTypeFilterChanged(
+                            isSelected ? null : type,
+                          ),
+                          showCheckmark: true,
+                          checkmarkColor: Colors.black,
+                        ),
                       );
                     }),
               ],
@@ -84,26 +103,6 @@ class _SearchBarState extends State<SearchBarWidget> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildChip(PokemonType type, String label, Color color) {
-    final isSelected = widget.currentTypeFilter == type;
-
-    return FilterChip(
-      label: Text(label.captalize()),
-      labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-      backgroundColor: color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(12),
-        side: BorderSide(color: color),
-      ),
-
-      selected: isSelected,
-      onSelected: (_) => widget.onTypeFilterChanged(isSelected ? null : type),
-
-      showCheckmark: true,
-      checkmarkColor: Colors.black,
     );
   }
 }
