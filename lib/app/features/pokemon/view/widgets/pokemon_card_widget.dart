@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/app/features/pokemon/model/entities/pokemon.dart';
+import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_details_modal.dart';
 
 class PokemonCardWidget extends StatelessWidget {
   final Pokemon pokemon;
@@ -10,7 +11,14 @@ class PokemonCardWidget extends StatelessWidget {
     final typeColor = (pokemon.type).color;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return PokemonDetailsModal();
+          },
+        );
+      },
       child: Container(
         decoration: BoxDecoration(
           color: typeColor,
