@@ -30,11 +30,11 @@ class PokemonDetails {
   }) {
     return PokemonDetails(
       id: id ?? this.id,
-      name: this.name,
-      description: this.description,
-      pokemonGif: this.pokemonGif,
-      height: this.height,
-      weight: this.weight,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      pokemonGif: pokemonGif ?? this.pokemonGif,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
       type: type ?? this.type,
     );
   }

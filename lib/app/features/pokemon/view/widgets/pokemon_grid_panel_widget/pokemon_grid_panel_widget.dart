@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_card_widget.dart';
+import 'package:pokedex/app/features/pokemon/model/entities/pokemon.dart';
+import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_card_widget/pokemon_card_widget.dart';
 import 'package:pokedex/app/features/pokemon/viewmodels/pokemon_list_view_model.dart';
 
 class PokemonGridPanelWidget extends StatelessWidget {
   final PokemonListViewModel viewModel;
-  const PokemonGridPanelWidget({super.key, required this.viewModel});
+  final Function(Pokemon) onPokemonTap;
+  const PokemonGridPanelWidget({
+    super.key,
+    required this.viewModel,
+    required this.onPokemonTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,10 @@ class PokemonGridPanelWidget extends StatelessWidget {
               itemCount: viewModel.filteredPokemons.length,
               itemBuilder: (context, index) {
                 final card = viewModel.filteredPokemons[index];
-                return PokemonCardWidget(pokemon: card);
+                return PokemonCardWidget(
+                  pokemon: card,
+                  onTap: () => onPokemonTap(card),
+                );
               },
             ),
     );

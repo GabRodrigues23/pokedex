@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_grid_panel_widget.dart';
+import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_details_widget/pokemon_details_modal.dart';
+import 'package:pokedex/app/features/pokemon/view/widgets/pokemon_grid_panel_widget/pokemon_grid_panel_widget.dart';
 import 'package:pokedex/app/features/pokemon/viewmodels/pokemon_list_view_model.dart';
-import 'package:pokedex/app/features/pokemon/view/widgets/filter_bar_widget.dart';
+import 'package:pokedex/app/features/pokemon/view/widgets/filter_bar_widget/filter_bar_widget.dart';
 
 class PokemonListPage extends StatefulWidget {
   final PokemonListViewModel viewModel;
@@ -62,7 +65,44 @@ class _PokemonListPageState extends State<PokemonListPage> {
                 },
               ),
               Expanded(
-                child: PokemonGridPanelWidget(viewModel: widget.viewModel),
+                child: PokemonGridPanelWidget(
+                  viewModel: widget.viewModel,
+                  onPokemonTap: (pokemon) {
+                    final index = widget.viewModel.filteredPokemons.indexOf(
+                      pokemon,
+                    );
+                    showGeneralDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      barrierLabel: '',
+                      transitionDuration: const Duration(milliseconds: 200),
+                      pageBuilder: (_, __, ___) => Stack(
+                        children: [
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                            child: Container(color: Colors.black26),
+                          ),
+                          PokemonDetailsModal(
+                            pokemons: widget.viewModel.filteredPokemons,
+                            initialIndex: index,
+                          ),
+                        ],
+                      ),
+                      transitionBuilder: (_, animation, __, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: ScaleTransition(
+                            scale: Tween(
+                              begin: 0.9,
+                              end: 1.0,
+                            ).animate(animation),
+                            child: child,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           );

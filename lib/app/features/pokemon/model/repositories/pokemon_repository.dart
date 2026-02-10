@@ -1,4 +1,6 @@
+import 'package:pokedex/app/features/pokemon/model/dto/pokemon_details_dto.dart';
 import 'package:pokedex/app/features/pokemon/model/entities/pokemon.dart';
+import 'package:pokedex/app/features/pokemon/model/entities/pokemon_details.dart';
 import 'package:pokedex/app/features/pokemon/model/interface/pokemon_repository_interface.dart';
 import 'package:pokedex/app/features/pokemon/model/services/pokemon_api_service.dart';
 import 'package:pokedex/app/features/pokemon/model/services/pokemon_type_cache.dart';
@@ -14,12 +16,21 @@ class PokemonRepository extends PokemonRepositoryInterface {
   PokemonRepository(this.api, this.defaults, this.typeCache);
 
   @override
-  Future<List<Pokemon>> fetchPokemonList({int? limit, int? offset}) async {
-    final dtos = await api.fetchPokemonList(
-      limit: limit ?? defaults.limit,
-      offset: offset ?? defaults.offset,
-    );
+  Future<List<Pokemon>> fetchPokemonList({
+    required int limit,
+    required int offset,
+  }) async {
+    final dtos = await api.fetchPokemonList(limit: limit, offset: offset);
     return dtos.map((dto) => dto.toEntity()).toList();
+  }
+
+  @override
+  Future<PokemonDetails> fetchPokemonDetails(int id) async {
+    final pokemonJson = await api.fetchPokemonDetails(id);
+    final speciesJson = await api.fetchPokemonSpecies(id);
+
+    final dto = PokemonDetailsDto.fromJson(pokemonJson, speciesJson);
+    return dto.toEntity(id);
   }
 
   @override

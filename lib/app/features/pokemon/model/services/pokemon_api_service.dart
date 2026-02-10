@@ -23,4 +23,9 @@ class PokemonApiService {
     final res = await dio.get(ApiEndpoints.pokemonDetails(id));
     return (res.data as Map<String, dynamic>);
   }
+
+  Future<Map<String, dynamic>> fetchPokemonSpecies(int id) async {
+    final res = await dio.get(ApiEndpoints.pokemonDescription(id));
+    return (res.data as Map<String, dynamic>);
+  }
 }

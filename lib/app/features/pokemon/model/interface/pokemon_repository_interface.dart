@@ -1,4 +1,5 @@
 import 'package:pokedex/app/features/pokemon/model/entities/pokemon.dart';
+import 'package:pokedex/app/features/pokemon/model/entities/pokemon_details.dart';
 import 'package:pokedex/shared/enums/pokemon_type.dart';
 
 abstract class PokemonRepositoryInterface {
@@ -13,4 +14,6 @@ abstract class PokemonRepositoryInterface {
     int batchSize = 25,
     void Function(int done, int total)? onProgress,
   });
+
+  Future<PokemonDetails> fetchPokemonDetails(int id);
 }
